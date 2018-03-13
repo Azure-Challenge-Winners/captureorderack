@@ -1,0 +1,20 @@
+pipeline:
+  build:
+    image: golang
+    envrionment:
+      - MONGOHOST=db
+      - TEAMNAME=team5
+    commands:
+      - go get
+      - go build
+      - go test
+
+services:
+  db:
+    image: mongo:3.6
+
+notify:
+    image: plugins/gitter
+    webhook: https://webhooks.gitter.im/e/1ad3f12fb536af1daa5a
+    when:
+      status: [ success, failure ]
